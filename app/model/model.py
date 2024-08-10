@@ -9,6 +9,7 @@ import pandas as pd
 import re
 
 def provide_recs(text): 
+    print(text)
     'This function provides the recommentations from the synopsis'
     url = 'https://github.com/pullz6/Anime_Recommendor/blob/main/Input/anime-dataset-2023.csv?raw=true'
     df_new = pd.read_csv(url, index_col=0)
@@ -66,10 +67,13 @@ def provide_recs(text):
     final_df['Recommended_anime'] = similarity_anime
     final_df['Recommended_score_T'] = similarity_scores_t
     final_df['Recommended_score_U'] = similarity_scores_U
+    final_df['Recommended_score'] = final_df['Recommended_score_T']+final_df['Recommended_score_U']
+    
+    print('done')
     
     return final_df
 
-df = provide_recs('Titans are attacking the walls')
-df.sort_values(by='Recommended_score_T',inplace=True)
+df = provide_recs('Titans are attacking through the walls')
+df.sort_values(by='Recommended_score',inplace=True)
 print(df.head())
 
