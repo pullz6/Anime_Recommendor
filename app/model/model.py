@@ -10,7 +10,7 @@ import re
 import dask.dataframe as dd
 
 def provide_recs(text): 
-    print(text)
+    #print(text)
     'This function provides the recommentations from the synopsis'
     url = 'https://github.com/pullz6/Anime_Recommendor/blob/main/Input/anime-dataset-2023.csv?raw=true'
     
@@ -69,11 +69,14 @@ def provide_recs(text):
     final_df['Recommended_anime'] = similarity_anime
     #final_df['Recommended_score_T'] = similarity_scores_t
     final_df['Recommended_score_U'] = similarity_scores_U
-    print('done')
+    final_df.sort_values(by='Recommended_score_U',ascending=False,inplace=True)
+    final_df = final_df.drop(final_df[final_df['Recommended_anime'] == 'UNKNOWN'].index)
+    final_df = final_df[:10]
+    final_df = final_df['Recommended_anime']
+    final_df = ', '.join([str(item) for item in final_df])
     
     return final_df
 
 df = provide_recs('Titans are attacking through the walls and eating people')
-df.sort_values(by='Recommended_score_U',ascending=False,inplace=True)
-print(df.head())
+print(df)
 
