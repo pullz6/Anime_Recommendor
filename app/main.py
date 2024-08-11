@@ -4,6 +4,8 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
+class TextIn(BaseModel):  
+     text : str
 
 @app.get("/")
 def root(): 
